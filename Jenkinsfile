@@ -37,7 +37,7 @@ pipeline
                             
                             if(!buildConfigExists)
                             {
-                                openshift.newBuild("--name=cicd", "--docker-image=registry.redhat.io/jboss-eap-7/eap74-openjdk8-openshift-rhel7", "--binary")
+                                openshift.newBuild("--name=cicd-pod", "--docker-image=registry.redhat.io/jboss-eap-7/eap74-openjdk8-openshift-rhel7", "--binary")
                             }
                             
                             openshift.selector("bc", "cicd").startBuild("--from-file=target/simple-servlet-0.0.1-SNAPSHOT.war", "--follow")
@@ -62,7 +62,7 @@ pipeline
                     {
                         openshift.withProject("project-cicd")
                         {
-                            def deployment = openshift.selector("dc", "cicd")
+                            def deployment = openshift.selector("dc", "cicd-dc")
                             
                             if(!deployment.exists())
                             {
